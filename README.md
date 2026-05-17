@@ -91,24 +91,16 @@ Ads) — wait until the top status bar stops saying "Resolving / Cloning".
 5. In the **Team** dropdown, pick your Apple ID. If none is listed: click
    **Add an Account…**, sign in with your Apple ID, then pick it. (A free
    Apple ID is fine for the simulator.)
-6. If you see a red error about the bundle identifier being taken: change
-   **Bundle Identifier** to something unique, e.g.
-   `com.yourname.worthit`.
-7. Now under **TARGETS** click **WorthItShare** and repeat steps 3–6, using
-   the matching id `com.yourname.worthit.share`.
+6. The bundle identifier is already set to `com.lwm82661.worthit` in the
+   project — this is unique to your Apple ID so it should not need changing.
+7. Now under **TARGETS** click **WorthItShare** and repeat steps 3–6
+   (its identifier is `com.lwm82661.worthit.share`).
 
 ### Step 5 — Turn on App Groups (lets the Share button talk to the app)
 
-Do this for **both** targets (WorthIt, then WorthItShare):
-
 App Group IDs are **globally unique across all Apple accounts** (just like
-bundle IDs), so generic ones like `group.com.worthit.app` are already taken
-and Apple will reject them ("Communication with Apple failed / not
-available"). Use the personalized one that matches the code:
-`group.com.myworthit.app`. If Xcode says even that is unavailable, pick
-something more unique (e.g. `group.com.<yourname>.worthit`) and change the
-one line `static let identifier =` in
-`App/WorthIt/Services/SharedStore.swift` to the exact same string.
+bundle IDs). The code is already set to `group.com.lwm82661.worthit` — a
+string tied to your Apple ID — so it should be available.
 
 Do this for **both** targets (WorthIt, then WorthItShare):
 
@@ -116,18 +108,16 @@ Do this for **both** targets (WorthIt, then WorthItShare):
    **+ Capability** (top-left of that tab).
 2. Type `App Groups`, double-click it in the list.
 3. A new **App Groups** section appears. Click the small **+** under it.
-4. Type exactly: `group.com.myworthit.app` and press **Return**. Make sure
+4. Type exactly: `group.com.lwm82661.worthit` and press **Return**. Make sure
    its checkbox is ticked.
-5. **Important:** if any *other* app group is also listed/checked (e.g.
-   `group.com.worthit.app` or unrelated ones), **uncheck them** — only
-   `group.com.myworthit.app` should be ticked. Multiple checked groups, or a
-   non-unique one, cause the "Communication with Apple failed" error.
+5. **Important:** if any *other* app group is also listed/checked, **uncheck
+   them** — only `group.com.lwm82661.worthit` should be ticked.
 6. Click **Try Again** in the red Status box. The error should clear and
    Xcode will auto-create the provisioning profile.
 7. Switch to the other target and repeat 1–6 — the group must be the
    **identical** string on both, and match `AppGroup.identifier` in
    `App/WorthIt/Services/SharedStore.swift` (already set to
-   `group.com.myworthit.app`).
+   `group.com.lwm82661.worthit`).
 
 ### Step 6 — Hook up StoreKit testing (so the "Remove ads" purchases work locally)
 
