@@ -1,0 +1,75 @@
+{
+  "identifier" : "HypeCheckProducts",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "ADFREE_LIFETIME",
+      "localizations" : [
+        {
+          "description" : "Remove all ads forever. One-time purchase.",
+          "displayName" : "Ad-Free Forever",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.hypecheck.app.adfree.lifetime",
+      "referenceName" : "Ad-Free Lifetime",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {},
+  "subscriptionGroups" : [
+    {
+      "id" : "ADFREE_GROUP",
+      "localizations" : [],
+      "name" : "Ad-Free",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "ADFREE_MONTHLY",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Ad-free, billed monthly.",
+              "displayName" : "Ad-Free Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.hypecheck.app.adfree.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Ad-Free Monthly",
+          "subscriptionGroupID" : "ADFREE_GROUP",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "displayPrice" : "6.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "ADFREE_YEARLY",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Ad-free, billed yearly. Best value.",
+              "displayName" : "Ad-Free Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.hypecheck.app.adfree.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Ad-Free Yearly",
+          "subscriptionGroupID" : "ADFREE_GROUP",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

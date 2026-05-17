@@ -4,6 +4,7 @@ import HypeCheckKit
 
 struct RootView: View {
     @Environment(AppRouter.self) private var router
+    @Environment(PurchaseManager.self) private var store
     @Environment(\.modelContext) private var context
     @State private var vm = AnalysisViewModel()
 
@@ -21,8 +22,14 @@ struct RootView: View {
                         }
                         .onChange(of: vm.state) { _, new in
                             if case .done(let outcome) = new {
-                                router.screen = .home
-                                router.path.append(.historyDetail(latestID(outcome)))
+                                let id = latestID(outcome)
+                                // Ad on every check unless premium; navigation
+                                // proceeds after the ad (or immediately).
+                                AdManager.shared.maybeShowInterstitial(
+                                    isPremium: store.isPremium) {
+                                    router.screen = .home
+                                    router.path.append(.historyDetail(id))
+                                }
                             }
                         }
                 case .result:

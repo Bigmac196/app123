@@ -13,6 +13,9 @@ packages:
   SwiftSoup:
     url: https://github.com/scinfu/SwiftSoup.git
     from: 2.7.0
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    from: 11.2.0
 
 targets:
   HypeCheck:
@@ -24,6 +27,8 @@ targets:
       - package: HypeCheckKit
         product: HypeCheckKit
       - package: SwiftSoup
+      - package: GoogleMobileAds
+        product: GoogleMobileAds
       - target: HypeCheckShare
         embed: true
     settings:

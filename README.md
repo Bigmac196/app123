@@ -51,12 +51,34 @@ Then in Xcode:
 3. Run on a device/simulator. Test the share flow from Safari, and the
    in-app **Check a product** manual path (reviewer-friendly, no share sheet).
 
+## Monetization
+
+Free with ads; an optional premium tier removes them.
+
+- **Ads**: Google Mobile Ads (AdMob) interstitial shown after **every** check.
+  This is the only ad/tracking component — see Privacy below.
+- **Premium (ad-free)** via StoreKit 2, **no backend**:
+  - One-time unlock — `com.hypecheck.app.adfree.lifetime` (non-consumable)
+  - Subscription — `com.hypecheck.app.adfree.monthly` / `.yearly`
+  - Either one sets `PurchaseManager.isPremium`, which suppresses all ads.
+- Local testing: in the scheme's **Run → Options**, set the StoreKit
+  configuration to `App/HypeCheck/Resources/Products.storekit`.
+- **Before shipping**: replace the Google **test** IDs — `GADApplicationIdentifier`
+  in `Info.plist` and `AdManager.interstitialUnitID` — with your real AdMob IDs,
+  register the matching product IDs in App Store Connect, and set the real
+  `NSPrivacyTrackingDomains` in `PrivacyInfo.xcprivacy`.
+
 ## Privacy
 
-- The only network request is the user-initiated download of the exact product
-  page they shared, straight from the device (same as opening it in Safari).
-- No analytics, no accounts, no third-party services. App Privacy =
-  *Data Not Collected*. Add `PrivacyInfo.xcprivacy` before submission.
+- **Product analysis is still 100% on-device.** The page fetch + parsing +
+  scoring never leave the phone.
+- The **ads module is the only networked/tracking component**: it requires the
+  App Tracking Transparency prompt (`NSUserTrackingUsageDescription`) and
+  collects ad/device identifiers. App Privacy is therefore **Data Collected
+  (Third-Party Advertising)** — `PrivacyInfo.xcprivacy` is included and must be
+  finalized with your real tracking domains.
+- Premium users still see zero ads and zero ad tracking.
+- No accounts, no analytics, no servers of your own.
 
 ## Disclaimers
 

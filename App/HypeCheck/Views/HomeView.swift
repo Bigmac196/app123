@@ -4,8 +4,10 @@ import HypeCheckKit
 
 struct HomeView: View {
     @Environment(AppRouter.self) private var router
+    @Environment(PurchaseManager.self) private var store
     @Query(sort: \CheckRecord.createdAt, order: .reverse)
     private var records: [CheckRecord]
+    @State private var showPaywall = false
 
     var body: some View {
         ScrollView {
@@ -34,6 +36,17 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
 
+                if !store.isPremium {
+                    Button {
+                        showPaywall = true
+                    } label: {
+                        Label("Remove ads", systemImage: "nosign")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                }
+
                 if !records.isEmpty {
                     recentSection
                 }
@@ -41,10 +54,18 @@ struct HomeView: View {
             .padding()
         }
         .navigationTitle("HypeCheck")
+        .sheet(isPresented: $showPaywall) { PaywallView() }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button { router.path.append(.history) } label: {
                     Image(systemName: "clock.arrow.circlepath")
+                }
+            }
+            if !store.isPremium {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { showPaywall = true } label: {
+                        Image(systemName: "crown")
+                    }
                 }
             }
         }
