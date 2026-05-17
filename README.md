@@ -167,6 +167,38 @@ You can skip all of this while testing. Do it only when shipping for real:
 4. You'll also need a paid **Apple Developer Program** membership ($99/yr) to
    submit to the App Store.
 
+---
+
+## Your free website (App Store needs this)
+
+Apple requires a **Support URL** and a **Privacy Policy URL**. This repo
+already includes both pages in the `docs/` folder. Host them free with GitHub
+Pages — no code, just clicks:
+
+1. Open your repo in a browser: `https://github.com/bigmac196/app123`
+2. Click the **Settings** tab (top of the page).
+3. In the left sidebar click **Pages**.
+4. Under **Build and deployment → Source**, leave it on
+   **Deploy from a branch**.
+5. Under **Branch**, click the dropdown and pick
+   `claude/hypecheck-app-design-9hl5N` (or `main` if you've merged this in).
+6. Next to it, click the folder dropdown and choose **/docs**.
+7. Click **Save**.
+8. Wait ~1–2 minutes, refresh the Pages settings page. It will show:
+   **“Your site is live at …”**
+
+Your two URLs will be:
+
+- **Support URL / website:** `https://bigmac196.github.io/app123/`
+- **Privacy Policy URL:** `https://bigmac196.github.io/app123/privacy.html`
+
+Use those two links when App Store Connect asks for them.
+
+**Before publishing:** open `docs/index.html` and `docs/privacy.html` and
+replace `support@example.com` with your real support email (it appears twice).
+You can edit these right on GitHub: open the file → click the **pencil** icon
+→ change the text → **Commit changes**.
+
 ## Monetization
 
 Free with ads; an optional premium tier removes them.
