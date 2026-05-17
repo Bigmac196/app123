@@ -1,4 +1,4 @@
-# HypeCheck
+# WorthIt
 
 Fully offline iOS app: share a product link (Amazon, TikTok Shop, Walmart,
 Target, Temu, …) and get an instant, explainable verdict on whether it's worth
@@ -8,10 +8,10 @@ buying or just hype. **No backend, no accounts, no data leaves the device.**
 
 | Path | Purpose |
 |---|---|
-| `Sources/HypeCheckKit/` | Pure-Swift, **dependency-free** core: models, HTML parsing, category classifier, 10 category analyzers, scoring engine. Builds & tests on any platform. |
-| `Tests/HypeCheckKitTests/` | XCTest suite + HTML fixtures. |
-| `App/HypeCheck/` | SwiftUI app (MVVM), SwiftData history, SwiftSoup selector extractor. |
-| `App/HypeCheckShare/` | Share Extension (URL + JS-preprocessed page text → App Group → deep link). |
+| `Sources/WorthItKit/` | Pure-Swift, **dependency-free** core: models, HTML parsing, category classifier, 10 category analyzers, scoring engine. Builds & tests on any platform. |
+| `Tests/WorthItKitTests/` | XCTest suite + HTML fixtures. |
+| `App/WorthIt/` | SwiftUI app (MVVM), SwiftData history, SwiftSoup selector extractor. |
+| `App/WorthItShare/` | Share Extension (URL + JS-preprocessed page text → App Group → deep link). |
 | `Package.swift` | SPM manifest for the core kit (no third-party deps). |
 | `project.yml` | XcodeGen spec that wires the app + extension + SwiftSoup. |
 
@@ -21,7 +21,7 @@ buying or just hype. **No backend, no accounts, no data leaves the device.**
 microdata / SwiftSoup selectors) → CategoryClassifier → category Analyzer →
 ScoringEngine → Verdict → SwiftData history → SwiftUI result screen.`
 
-The core engine is split out as `HypeCheckKit` so it is unit-testable without
+The core engine is split out as `WorthItKit` so it is unit-testable without
 Xcode. SwiftSoup is layered in via the `HTMLExtracting` protocol — the core
 parser already handles JSON-LD/OG/microdata with zero dependencies; SwiftSoup
 only adds per-retailer CSS-selector fallbacks.
@@ -76,7 +76,7 @@ copy them to me and stop here.
 
 ```bash
 xcodegen generate
-open HypeCheck.xcodeproj
+open WorthIt.xcodeproj
 ```
 
 Xcode opens. The first time, it downloads packages (SwiftSoup, Google Mobile
@@ -84,8 +84,8 @@ Ads) — wait until the top status bar stops saying "Resolving / Cloning".
 
 ### Step 4 — Set your signing (so it can run on a simulator/phone)
 
-1. In the left sidebar, click the blue **HypeCheck** icon at the very top.
-2. In the middle pane, under **TARGETS**, click **HypeCheck**.
+1. In the left sidebar, click the blue **WorthIt** icon at the very top.
+2. In the middle pane, under **TARGETS**, click **WorthIt**.
 3. Click the **Signing & Capabilities** tab.
 4. Check the box **Automatically manage signing**.
 5. In the **Team** dropdown, pick your Apple ID. If none is listed: click
@@ -93,27 +93,27 @@ Ads) — wait until the top status bar stops saying "Resolving / Cloning".
    Apple ID is fine for the simulator.)
 6. If you see a red error about the bundle identifier being taken: change
    **Bundle Identifier** to something unique, e.g.
-   `com.yourname.hypecheck`.
-7. Now under **TARGETS** click **HypeCheckShare** and repeat steps 3–6, using
-   the matching id `com.yourname.hypecheck.share`.
+   `com.yourname.worthit`.
+7. Now under **TARGETS** click **WorthItShare** and repeat steps 3–6, using
+   the matching id `com.yourname.worthit.share`.
 
 ### Step 5 — Turn on App Groups (lets the Share button talk to the app)
 
-Do this for **both** targets (HypeCheck, then HypeCheckShare):
+Do this for **both** targets (WorthIt, then WorthItShare):
 
 1. With the target selected, still on **Signing & Capabilities**, click
    **+ Capability** (top-left of that tab).
 2. Type `App Groups`, double-click it in the list.
 3. A new **App Groups** section appears. Click the small **+** under it.
-4. Type exactly: `group.com.hypecheck.app` and press **Return**. Make sure
+4. Type exactly: `group.com.worthit.app` and press **Return**. Make sure
    the checkbox next to it is ticked.
 5. Switch to the other target and repeat — the group name must be **identical**
    on both.
 
 > If you changed the bundle id in Step 4, you can keep the group name
-> `group.com.hypecheck.app` as-is — just make sure it matches on both targets
+> `group.com.worthit.app` as-is — just make sure it matches on both targets
 > and matches `AppGroup.identifier` in
-> `App/HypeCheck/Services/SharedStore.swift`.
+> `App/WorthIt/Services/SharedStore.swift`.
 
 ### Step 6 — Hook up StoreKit testing (so the "Remove ads" purchases work locally)
 
@@ -138,7 +138,7 @@ Do this for **both** targets (HypeCheck, then HypeCheckShare):
   see a verdict, then (because you're not premium) a **test ad**, then the
   result screen.
 - **Share path:** in the simulator open **Safari**, go to any Amazon product
-  page, tap the **Share** icon, scroll to find **HypeCheck**, tap it.
+  page, tap the **Share** icon, scroll to find **WorthIt**, tap it.
 - **Remove ads:** tap the **crown** icon (top-left on Home) or the
   **Remove ads** button → tap a purchase → in the StoreKit test sheet tap
   **Confirm** (no real money). Ads stop.
@@ -152,17 +152,17 @@ You can skip all of this while testing. Do it only when shipping for real:
 1. **Real AdMob IDs**
    - Create a free account at <https://admob.google.com>, add an app, create an
      **Interstitial** ad unit.
-   - In Xcode open `App/HypeCheck/Resources/Info.plist`, find
+   - In Xcode open `App/WorthIt/Resources/Info.plist`, find
      **GADApplicationIdentifier**, replace its value with your real one
      (`ca-app-pub-XXXX~XXXX`).
-   - Open `App/HypeCheck/Services/AdManager.swift`, find the line
+   - Open `App/WorthIt/Services/AdManager.swift`, find the line
      `var interstitialUnitID =` and replace it with your real ad unit id
      (`ca-app-pub-XXXX/XXXX`).
 2. **Real in-app purchases** — in App Store Connect create three products with
-   these exact IDs: `com.hypecheck.app.adfree.lifetime` (Non-Consumable),
-   `com.hypecheck.app.adfree.monthly` and `com.hypecheck.app.adfree.yearly`
+   these exact IDs: `com.worthit.app.adfree.lifetime` (Non-Consumable),
+   `com.worthit.app.adfree.monthly` and `com.worthit.app.adfree.yearly`
    (Auto-Renewable Subscriptions, one group).
-3. **Privacy** — open `App/HypeCheck/Resources/PrivacyInfo.xcprivacy` and set
+3. **Privacy** — open `App/WorthIt/Resources/PrivacyInfo.xcprivacy` and set
    the real ad tracking domains (Google publishes the list).
 4. You'll also need a paid **Apple Developer Program** membership ($99/yr) to
    submit to the App Store.
@@ -206,11 +206,11 @@ Free with ads; an optional premium tier removes them.
 - **Ads**: Google Mobile Ads (AdMob) interstitial shown after **every** check.
   This is the only ad/tracking component — see Privacy below.
 - **Premium (ad-free)** via StoreKit 2, **no backend**:
-  - One-time unlock — `com.hypecheck.app.adfree.lifetime` (non-consumable)
-  - Subscription — `com.hypecheck.app.adfree.monthly` / `.yearly`
+  - One-time unlock — `com.worthit.app.adfree.lifetime` (non-consumable)
+  - Subscription — `com.worthit.app.adfree.monthly` / `.yearly`
   - Either one sets `PurchaseManager.isPremium`, which suppresses all ads.
 - Local testing: in the scheme's **Run → Options**, set the StoreKit
-  configuration to `App/HypeCheck/Resources/Products.storekit`.
+  configuration to `App/WorthIt/Resources/Products.storekit`.
 - **Before shipping**: replace the Google **test** IDs — `GADApplicationIdentifier`
   in `Info.plist` and `AdManager.interstitialUnitID` — with your real AdMob IDs,
   register the matching product IDs in App Store Connect, and set the real

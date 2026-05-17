@@ -1,14 +1,14 @@
 # XcodeGen spec. Generate the project with:  xcodegen generate
 # Requires: brew install xcodegen
-name: HypeCheck
+name: WorthIt
 options:
-  bundleIdPrefix: com.hypecheck
+  bundleIdPrefix: com.worthit
   deploymentTarget:
     iOS: "17.0"
   createIntermediateGroups: true
 
 packages:
-  HypeCheckKit:
+  WorthItKit:
     path: .
   SwiftSoup:
     url: https://github.com/scinfu/SwiftSoup.git
@@ -18,53 +18,53 @@ packages:
     from: 11.2.0
 
 targets:
-  HypeCheck:
+  WorthIt:
     type: application
     platform: iOS
     sources:
-      - path: App/HypeCheck
+      - path: App/WorthIt
     dependencies:
-      - package: HypeCheckKit
-        product: HypeCheckKit
+      - package: WorthItKit
+        product: WorthItKit
       - package: SwiftSoup
       - package: GoogleMobileAds
         product: GoogleMobileAds
-      - target: HypeCheckShare
+      - target: WorthItShare
         embed: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.hypecheck.app
-        INFOPLIST_FILE: App/HypeCheck/Resources/Info.plist
-        CODE_SIGN_ENTITLEMENTS: App/HypeCheck/Resources/HypeCheck.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.worthit.app
+        INFOPLIST_FILE: App/WorthIt/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/WorthIt/Resources/WorthIt.entitlements
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
         ENABLE_USER_SCRIPT_SANDBOXING: YES
 
-  HypeCheckShare:
+  WorthItShare:
     type: app-extension
     platform: iOS
     sources:
-      - path: App/HypeCheckShare
-      - path: App/HypeCheck/Services/SharedStore.swift
+      - path: App/WorthItShare
+      - path: App/WorthIt/Services/SharedStore.swift
     dependencies:
-      - package: HypeCheckKit
-        product: HypeCheckKit
+      - package: WorthItKit
+        product: WorthItKit
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.hypecheck.app.share
-        INFOPLIST_FILE: App/HypeCheckShare/Info.plist
-        CODE_SIGN_ENTITLEMENTS: App/HypeCheckShare/HypeCheckShare.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.worthit.app.share
+        INFOPLIST_FILE: App/WorthItShare/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/WorthItShare/WorthItShare.entitlements
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
 
-  HypeCheckTests:
+  WorthItTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - path: Tests/HypeCheckKitTests
+      - path: Tests/WorthItKitTests
     dependencies:
-      - package: HypeCheckKit
-        product: HypeCheckKit
+      - package: WorthItKit
+        product: WorthItKit
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.hypecheck.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.worthit.tests
