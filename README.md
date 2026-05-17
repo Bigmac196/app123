@@ -121,7 +121,12 @@ Do this for **both** targets (WorthIt, then WorthItShare):
 
 ### Step 6 — Hook up StoreKit testing (so the "Remove ads" purchases work locally)
 
-1. Top menu bar: **Product → Scheme → Edit Scheme…**
+1. At the top of the Xcode window, next to the ▶︎ Play button, you'll see
+   a label like **WorthIt** followed by a **>** and a device name. Click
+   directly on **WorthIt** (the scheme name). A small dropdown appears —
+   click **Edit Scheme…** at the bottom of it.
+   *(Alternatively: top menu bar → **Product** → **Scheme** →
+   **Edit Scheme…**)*
 2. In the left list click **Run**.
 3. Click the **Options** tab.
 4. Find **StoreKit Configuration**, click its dropdown, choose
