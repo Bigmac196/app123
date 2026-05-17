@@ -101,19 +101,33 @@ Ads) — wait until the top status bar stops saying "Resolving / Cloning".
 
 Do this for **both** targets (WorthIt, then WorthItShare):
 
+App Group IDs are **globally unique across all Apple accounts** (just like
+bundle IDs), so generic ones like `group.com.worthit.app` are already taken
+and Apple will reject them ("Communication with Apple failed / not
+available"). Use the personalized one that matches the code:
+`group.com.myworthit.app`. If Xcode says even that is unavailable, pick
+something more unique (e.g. `group.com.<yourname>.worthit`) and change the
+one line `static let identifier =` in
+`App/WorthIt/Services/SharedStore.swift` to the exact same string.
+
+Do this for **both** targets (WorthIt, then WorthItShare):
+
 1. With the target selected, still on **Signing & Capabilities**, click
    **+ Capability** (top-left of that tab).
 2. Type `App Groups`, double-click it in the list.
 3. A new **App Groups** section appears. Click the small **+** under it.
-4. Type exactly: `group.com.worthit.app` and press **Return**. Make sure
-   the checkbox next to it is ticked.
-5. Switch to the other target and repeat — the group name must be **identical**
-   on both.
-
-> If you changed the bundle id in Step 4, you can keep the group name
-> `group.com.worthit.app` as-is — just make sure it matches on both targets
-> and matches `AppGroup.identifier` in
-> `App/WorthIt/Services/SharedStore.swift`.
+4. Type exactly: `group.com.myworthit.app` and press **Return**. Make sure
+   its checkbox is ticked.
+5. **Important:** if any *other* app group is also listed/checked (e.g.
+   `group.com.worthit.app` or unrelated ones), **uncheck them** — only
+   `group.com.myworthit.app` should be ticked. Multiple checked groups, or a
+   non-unique one, cause the "Communication with Apple failed" error.
+6. Click **Try Again** in the red Status box. The error should clear and
+   Xcode will auto-create the provisioning profile.
+7. Switch to the other target and repeat 1–6 — the group must be the
+   **identical** string on both, and match `AppGroup.identifier` in
+   `App/WorthIt/Services/SharedStore.swift` (already set to
+   `group.com.myworthit.app`).
 
 ### Step 6 — Hook up StoreKit testing (so the "Remove ads" purchases work locally)
 

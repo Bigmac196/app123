@@ -1,9 +1,13 @@
 import Foundation
 
 /// App Group identifier — must match the capability enabled on BOTH the app
-/// and the share-extension targets in the Xcode project.
+/// and the share-extension targets in Xcode. App Groups are GLOBALLY UNIQUE
+/// across all Apple accounts (like bundle IDs), so this uses a personalized
+/// prefix. If Xcode says it's "not available", change it here to something
+/// unique to you (e.g. group.com.<yourname>.worthit) and use the same string
+/// in the Xcode App Groups capability on both targets.
 enum AppGroup {
-    static let identifier = "group.com.worthit.app"
+    static let identifier = "group.com.myworthit.app"
 }
 
 /// Lightweight handoff between the Share Extension and the main app via the
