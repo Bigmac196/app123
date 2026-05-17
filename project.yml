@@ -1,0 +1,70 @@
+# XcodeGen spec. Generate the project with:  xcodegen generate
+# Requires: brew install xcodegen
+name: WorthIt
+options:
+  bundleIdPrefix: com.lwm82661
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+packages:
+  WorthItKit:
+    path: .
+  SwiftSoup:
+    url: https://github.com/scinfu/SwiftSoup.git
+    from: 2.7.0
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    from: 11.2.0
+
+targets:
+  WorthIt:
+    type: application
+    platform: iOS
+    sources:
+      - path: App/WorthIt
+    dependencies:
+      - package: WorthItKit
+        product: WorthItKit
+      - package: SwiftSoup
+      - package: GoogleMobileAds
+        product: GoogleMobileAds
+      - target: WorthItShare
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lwm82661.worthit
+        INFOPLIST_FILE: App/WorthIt/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/WorthIt/Resources/WorthIt.entitlements
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+  WorthItShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: App/WorthItShare
+      - path: App/WorthIt/Services/SharedStore.swift
+    dependencies:
+      - package: WorthItKit
+        product: WorthItKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lwm82661.worthit.share
+        INFOPLIST_FILE: App/WorthItShare/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/WorthItShare/WorthItShare.entitlements
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+
+  WorthItTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/WorthItKitTests
+    dependencies:
+      - package: WorthItKit
+        product: WorthItKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lwm82661.worthit.tests
