@@ -4,7 +4,7 @@
 <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.com.myworthit.app</string>
+        <string>group.com.lwm82661.worthit</string>
     </array>
 </dict>
 </plist>

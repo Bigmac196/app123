@@ -7,7 +7,7 @@ import Foundation
 /// unique to you (e.g. group.com.<yourname>.worthit) and use the same string
 /// in the Xcode App Groups capability on both targets.
 enum AppGroup {
-    static let identifier = "group.com.myworthit.app"
+    static let identifier = "group.com.lwm82661.worthit"
 }
 
 /// Lightweight handoff between the Share Extension and the main app via the
