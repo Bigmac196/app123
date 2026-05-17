@@ -11,7 +11,7 @@ struct HypeCheckApp: App {
             schema: schema,
             groupContainer: .identifier(AppGroup.identifier))
         do {
-            return try ModelContainer(for: schema, configurations: [config])
+            return try ModelContainer(for: schema, configurations: config)
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }

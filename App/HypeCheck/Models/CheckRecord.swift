@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import HypeCheckKit
 
 /// Persisted history entry. Stores the full analysis as archived JSON so the
 /// results screen can be re-rendered offline without re-fetching.

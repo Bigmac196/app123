@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import HypeCheckKit
 
 struct HistoryView: View {
     @Environment(AppRouter.self) private var router

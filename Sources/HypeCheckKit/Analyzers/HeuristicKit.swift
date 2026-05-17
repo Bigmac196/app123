@@ -33,7 +33,7 @@ public enum HeuristicKit {
     public static func firstNumber(in text: String) -> Double? {
         guard let r = text.range(of: #"\d[\d,]*(\.\d+)?"#, options: .regularExpression)
         else { return nil }
-        return Double(text[r].replacingOccurrences(of: ",", with: ""))
+        return Double(String(text[r]).replacingOccurrences(of: ",", with: ""))
     }
 
     /// Parses a weight capacity in lbs from free text (handles kg → lbs).

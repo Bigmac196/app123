@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import HypeCheckKit
 
 struct HistoryDetailView: View {
     let recordID: UUID

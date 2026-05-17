@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import HypeCheckKit
 
 /// Manual fallback used when a page is JS-only / blocked, and as the
 /// reviewer-friendly demo path (no share sheet required).

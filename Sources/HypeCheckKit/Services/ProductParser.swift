@@ -61,7 +61,7 @@ public struct ProductParser: Sendable {
             if let desc = ld["description"] as? String { p.productDescription = desc.cleaned }
             if let img = ld["image"] as? String, let u = URL(string: img) { p.imageURLs = [u] }
             if let imgs = ld["image"] as? [String] {
-                p.imageURLs = imgs.compactMap(URL.init(string:))
+                p.imageURLs = imgs.compactMap { URL(string: $0) }
             }
         }
 
@@ -238,7 +238,9 @@ public struct ProductParser: Sendable {
     static func double(_ any: Any?) -> Double? {
         if let d = any as? Double { return d }
         if let i = any as? Int { return Double(i) }
-        if let s = any as? String { return Double(s.filter { "0123456789.".contains($0) }) }
+        if let s = any as? String {
+            return Double(String(s.filter { "0123456789.".contains($0) }))
+        }
         return nil
     }
 
@@ -246,7 +248,7 @@ public struct ProductParser: Sendable {
         if let i = any as? Int { return i }
         if let d = any as? Double { return Int(d) }
         if let s = any as? String {
-            return Int(s.filter { $0.isNumber })
+            return Int(String(s.filter { $0.isNumber }))
         }
         return nil
     }
@@ -255,7 +257,7 @@ public struct ProductParser: Sendable {
         guard let text else { return nil }
         if let r = text.range(of: #"([0-5](\.\d)?)\s*(out of 5|/\s?5|stars?|star rating)"#,
                               options: [.regularExpression, .caseInsensitive]),
-           let v = Double(text[r].prefix(while: { $0.isNumber || $0 == "." })) {
+           let v = Double(String(text[r].prefix(while: { $0.isNumber || $0 == "." }))) {
             return v
         }
         return nil
@@ -265,7 +267,7 @@ public struct ProductParser: Sendable {
         guard let text else { return nil }
         if let r = text.range(of: #"([\d,]+)\s*(ratings?|reviews?|global ratings)"#,
                               options: [.regularExpression, .caseInsensitive]) {
-            return Int(text[r].filter { $0.isNumber })
+            return Int(String(text[r].filter { $0.isNumber }))
         }
         return nil
     }
@@ -299,7 +301,7 @@ extension String {
         if let re = try? NSRegularExpression(pattern: "&#(\\d+);") {
             let ns = s as NSString
             for m in re.matches(in: s, range: NSRange(location: 0, length: ns.length)).reversed() {
-                if let code = Int(ns.substring(with: m.range(at: 1))),
+                if let code = UInt32(ns.substring(with: m.range(at: 1))),
                    let scalar = Unicode.Scalar(code) {
                     s = (s as NSString).replacingCharacters(
                         in: m.range, with: String(Character(scalar)))

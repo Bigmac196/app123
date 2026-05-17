@@ -1,4 +1,5 @@
 import SwiftUI
+import HypeCheckKit
 
 extension Color {
     init(hex: String) {

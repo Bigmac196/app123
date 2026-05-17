@@ -1,5 +1,6 @@
 import Foundation
 import SwiftSoup
+import HypeCheckKit
 
 /// SwiftSoup-backed per-platform selector fallback. Only used when the
 /// dependency-free JSON-LD / OpenGraph path didn't already fill a field.

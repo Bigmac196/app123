@@ -1,4 +1,5 @@
 import SwiftUI
+import HypeCheckKit
 
 struct ResultView: View {
     let outcome: AnalysisOutcome

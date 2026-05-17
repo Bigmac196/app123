@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import HypeCheckKit
 
 struct HomeView: View {
     @Environment(AppRouter.self) private var router

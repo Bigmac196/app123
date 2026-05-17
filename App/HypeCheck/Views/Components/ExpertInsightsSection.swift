@@ -1,4 +1,5 @@
 import SwiftUI
+import HypeCheckKit
 
 struct ExpertInsightsSection: View {
     let result: AnalyzerResult
